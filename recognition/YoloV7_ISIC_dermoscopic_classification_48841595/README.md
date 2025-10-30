@@ -67,6 +67,11 @@ ISIC2018/
 The dataset was provided under the licence CC-BY-NC and is avaliable open source at: https://challenge.isic-archive.com/data/#2018
 
 
+
+
+
+
+
 YoloV7 model architecture
 -------------------------
 The YOLOv7 architecture divides each input image into a grid and predicts bounding boxes and class probabilities for each cell. For this project, the model was fine-tuned on the ISIC dermoscopic dataset using transfer learning which leverages pretrained weights on COCO to accelerate convergence. The model outputs both bounding boxes around lesions and classification scores for lesion types. the provided coordinates for the boundary boxes along with the label from the class with the highest classification socre can then be mapped onto the original image to visualise the model's prediction.
@@ -85,6 +90,20 @@ Each test image is resized to 640x640, converted to RGB, and normalized. These t
 
 - Describe any specific pre-processing you have used with references if any. Justify your training, validation and testing splits of the data.
 -justify training, validation and testing splits of the data.
+
+
+- to check for an approximately equal class distribution, some python code was developed (found at utils/splitTestTrain), to check count the instances of each class. this revealed a highly disproportional data set as highlighted by: {'MEL': 1305, 'NV': 7737, 'ВСС': 622, 'AKIEC': 378, 'BKL': 1338, 'DF': 160, 'VASC': 180}
+
+- to reduce this effect, the data was split into test/train/val from within each class itself. resultin in the following representation within each test/val/train:
+
+MEL: train=1045, val=130, test=130
+NV: train=6191, val=773, test=773
+BCC: train=498, val=62, test=62
+AKIEC: train=304, val=37, test=37
+BKL: train=1072, val=133, test=133
+DF: train=128, val=16, test=16
+VASC: train=144, val=18, test=18
+
 
 
 Model Training
